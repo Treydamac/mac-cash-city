@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Mac-Cash City"/>
+<meta name="theme-color" content="#04060c"/>
+<title>Mac-Cash City</title>
+<style>
+:root{--navy:#050814;--fog:#9eb4d8;--gold:#e8c36a;--ace:#ff5a2a;--eivor:#6ee0ff;--luffy:#ff6b8a;--itachi:#ff3d5a;--grok:#c6ff4a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#02040a;color:#eef4ff;font-family:ui-sans-serif,system-ui,-apple-system}
+body{overflow:hidden;touch-action:manipulation}
+#sky{position:fixed;inset:0;background:radial-gradient(900px 420px at 78% -8%,#243a7a 0%,transparent 58%),radial-gradient(700px 380px at 8% 108%,#4a160c 0%,transparent 52%),linear-gradient(#02040a,#0b1228 42%,#140e1c)}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:.75;animation:twinkle 3.4s infinite}
+.star.big{width:3px;height:3px;box-shadow:0 0 8px #fff}
+@keyframes twinkle{50%{opacity:.12}}
+#moon{position:fixed;top:9%;right:12%;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f4e7c2,#c9b27a 70%);box-shadow:0 0 40px #e8c36a66;z-index:1}
+#city{position:fixed;left:0;right:0;bottom:0;height:60%;z-index:2}
+.row{position:absolute;bottom:0;left:0;right:0;height:100%;display:flex;align-items:flex-end;justify-content:center;gap:6px;padding:0 3%}
+.b{position:relative;width:8.2%;min-width:24px;background:linear-gradient(180deg,#2a3a68,#0b1224);border-radius:5px 5px 0 0;transform-origin:bottom;animation:rise 1.5s cubic-bezier(.2,.8,.2,1) both}
+.b:nth-child(odd){background:linear-gradient(180deg,#1c2748,#0a1020)}
+.win{position:absolute;inset:8% 16%;display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.win i{background:#6ee0ff28;animation:blink 3.2s infinite;border-radius:1px}
+.win i:nth-child(3n){animation-delay:.7s;background:#e8c36a36}
+.win i:nth-child(4n){animation-delay:1.2s;background:#ff6b8a30}
+@keyframes rise{from{transform:scaleY(.12);opacity:0}to{transform:scaleY(1);opacity:1}}
+@keyframes blink{50%{opacity:.22}}
+#haze{position:fixed;left:0;right:0;bottom:0;height:32%;background:linear-gradient(transparent,#050814f0 70%);pointer-events:none;z-index:3}
+header{position:fixed;top:max(12px,env(safe-area-inset-top));left:16px;right:16px;z-index:5}
+header h1{margin:0;font-size:26px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;text-shadow:0 0 28px #6ee0ff77}
+header p{margin:5px 0 0;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9eb4d8}
+.pulse-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--grok);box-shadow:0 0 10px var(--grok);margin-right:6px;animation:twinkle 1.6s infinite}
+#hud{position:fixed;left:10px;right:10px;bottom:calc(14px + env(safe-area-inset-bottom,8px));z-index:6;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.card{background:#0b1224cc;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid #2a3a68;border-radius:16px;padding:11px 12px;min-height:82px}
+.card:active{transform:scale(.97)}
+.card .top{display:flex;align-items:center;gap:8px}
+.sig{width:28px;height:28px;flex:0 0 28px;border-radius:8px;border:1px solid currentColor;display:grid;place-items:center}
+.sig svg{width:18px;height:18px}
+.card b{display:block;font-size:12px;letter-spacing:.07em}
+.card small{color:#9eb4d8;font-size:11px;display:block;margin-top:3px}
+.tag{display:inline-block;margin-top:7px;font-size:9px;letter-spacing:.12em;border:1px solid currentColor;padding:2px 7px;border-radius:99px}
+.ace{color:var(--ace)}.eivor{color:var(--eivor)}.luffy{color:var(--luffy)}.itachi{color:var(--itachi)}
+.sheet-mark{width:36px;height:36px;border-radius:10px;border:1px solid currentColor;display:grid;place-items:center;margin-bottom:8px}
+#sheet{position:fixed;inset:auto 0 0 0;z-index:8;display:none;background:#070b16f5;border-top:1px solid #2a3a68;padding:16px 16px calc(22px + env(safe-area-inset-bottom));max-height:64%;overflow:auto;border-radius:20px 20px 0 0}
+#sheet.open{display:block}
+#close{float:right;background:#1a2444;color:#fff;border:0;border-radius:8px;padding:7px 12px}
+.bot{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1a2444;font-size:13px}
+.bot span:last-child{font-size:11px;color:var(--gold)}
+.live{position:fixed;top:16%;left:50%;transform:translateX(-50%);width:min(92vw,420px);height:130px;pointer-events:none;z-index:3}
+.orb{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4px;border-radius:50%;background:#6ee0ff;box-shadow:0 0 16px #6ee0ff;animation:orbit 8s linear infinite}
+.orb.a{background:#ff5a2a;box-shadow:0 0 16px #ff5a2a;animation-duration:6.4s}
+.orb.b{background:#ff6b8a;box-shadow:0 0 16px #ff6b8a;animation-duration:9.2s;animation-delay:-2s}
+.orb.c{background:#c6ff4a;box-shadow:0 0 16px #c6ff4a;animation-duration:7.1s;animation-delay:-4s}
+@keyframes orbit{from{transform:rotate(0deg) translateX(92px) rotate(0deg)}to{transform:rotate(360deg) translateX(92px) rotate(-360deg)}}
+#hint{position:fixed;top:max(58px,calc(env(safe-area-inset-top) + 46px));left:16px;right:16px;z-index:7;display:none;background:#0b1224ee;border:1px solid #2a3a68;border-radius:12px;padding:10px 12px;font-size:12px;color:#c5d2ea}
+#hint b{color:var(--gold)}
+</style>
+</head>
+<body>
+<div id="sky"></div><div id="moon"></div>
+<div class="live"><span class="orb"></span><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span></div>
+<div id="city"><div class="row" id="row"></div></div><div id="haze"></div>
+<header><h1>Mac-Cash City</h1><p><span class="pulse-dot"></span>Cinematic district · MOCK stations · phone gate</p></header>
+<div id="hint"><b>HOME SCREEN</b><br/>Share → Add to Home Screen</div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="s-ace" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 20h10M8 20l2-8h4l2 8"/><path d="M12 12V6"/><path d="M9 8c1.2-2 4.8-2 6 0"/><path d="M10 4h4"/></symbol>
+<symbol id="s-eivor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 14c4-1 6-6 8-11 2 5 4 10 8 11"/><path d="M7 14c1 3 3 5 5 6 2-1 4-3 5-6"/><path d="M12 9l-2 2m2-2 2 2"/></symbol>
+<symbol id="s-luffy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="13" rx="8" ry="3"/><path d="M4 13c0-5 3.5-9 8-9s8 4 8 9"/><path d="M8 13c.4-3 2-5 4-5s3.6 2 4 5"/><circle cx="12" cy="7" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="s-itachi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/><path d="M12 4v3M20 12h-3M12 20v-3M4 12h3"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/></symbol>
+</svg>
+<div id="hud">
+<div class="card ace" onclick="openD('ace')"><div class="top"><span class="sig"><svg><use href="#s-ace"/></svg></span><b>FORGE YARD · ACE</b></div><small>Execution. Paper only.</small><span class="tag">MOCK</span></div>
+<div class="card eivor" onclick="openD('eivor')"><div class="top"><span class="sig"><svg><use href="#s-eivor"/></svg></span><b>FROST COURT · EIVOR</b></div><small>Watch it. Don’t chase it.</small><span class="tag">PARTIAL</span></div>
+<div class="card luffy" onclick="openD('luffy')"><div class="top"><span class="sig"><svg><use href="#s-luffy"/></svg></span><b>EMBER DOCKS · LUFFY</b></div><small>You publish. No auto-post.</small><span class="tag">DRAFT</span></div>
+<div class="card itachi" onclick="openD('itachi')"><div class="top"><span class="sig"><svg><use href="#s-itachi"/></svg></span><b>INK TEMPLE · ITACHI</b></div><small>No rugs. No live spend.</small><span class="tag">WORKING</span></div>
+</div>
+<div id="sheet"><button id="close" onclick="closeD()">close</button><div id="sm" class="sheet-mark"></div><h2 id="st"></h2><p id="sb"></p><div id="crew"></div></div>
+<script>
+const H=[40,68,52,86,46,94,60,76,48,82,56,70,44,88,50,64];
+const row=document.getElementById('row');
+H.forEach((h,i)=>{const d=document.createElement('div');d.className='b';d.style.height=h+'%';d.style.animationDelay=(i*0.05)+'s';const w=document.createElement('div');w.className='win';for(let n=0;n<(h>70?14:10);n++)w.appendChild(document.createElement('i'));d.appendChild(w);row.appendChild(d)});
+const sky=document.getElementById('sky');
+for(let i=0;i<70;i++){const s=document.createElement('div');s.className='star'+(i%9===0?' big':'');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*44+'%';sky.appendChild(s)}
+const DATA={ace:{t:'Forge Yard — ACE',b:'Tasks and tooling. Live Phantom DENIED until a computer + approval.',c:[['FORGE','build / files','MOCK'],['SCANNER','markets paper','MOCK'],['DESK','orders gate','DENIED live']]},eivor:{t:'Frost Court — Eivor',b:'Astra rule is city law: watch, don\u2019t chase.',c:[['ORACLE','research','PARTIAL'],['COURT','priorities','WORKING'],['LEDGER','paper book','MOCK']]},luffy:{t:'Ember Docks — Luffy',b:'You publish. No auto-post from the phone.',c:[['PRESS','carousels','DRAFT'],['DOCK','SKU outline','PARTIAL'],['SIGNAL','calendar','MOCK']]},itachi:{t:'Ink Temple — Itachi',b:'Firewall. No rugs. No live spend.',c:[['SENTINEL','vet tools','WORKING'],['VEIL','redact','WORKING'],['SEAL','approvals','WORKING']]}};
+function openD(k){const x=DATA[k];const sm=document.getElementById('sm');sm.className='sheet-mark '+k;sm.innerHTML='<svg><use href="#s-'+k+'"/></svg>';document.getElementById('st').textContent=x.t;document.getElementById('sb').textContent=x.b;document.getElementById('crew').innerHTML=x.c.map(([n,j,s])=>'<div class="bot"><span>'+n+' — '+j+'</span><span>'+s+'</span></div>').join('');document.getElementById('sheet').className='open';document.getElementById('sheet').style.display='block'}
+function closeD(){document.getElementById('sheet').className='';document.getElementById('sheet').style.display='none'}
+if(!(window.navigator.standalone||matchMedia('(display-mode: standalone)').matches)){const h=document.getElementById('hint');h.style.display='block';setTimeout(()=>h.style.display='none',9000)}
+</script>
+</body></html>
